@@ -1,0 +1,201 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Poppins', sans-serif;
+}
+
+body {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background-size: cover;
+    background-position: center;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    background-size: auto;
+}
+
+/* Page de connexion */
+body:has(#loginForm) {
+    background: url('images/login-bg.jpg') no-repeat center center fixed;
+    background-size:  100%;
+}
+
+/* Page d'inscription */
+body:has(#registerForm) {
+    background: url('images/register-bg.jpg') no-repeat center center fixed;
+    background-size: 100%;
+}
+
+.container {
+    width: 100%;
+    max-width: 500px;
+    padding: 20px;
+    margin-top: 20px;
+}
+
+.form-container {
+    background-color: rgba(255, 255, 255, 0.15);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    padding: 40px;
+    border-radius: 15px;
+    box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+    border: 1px solid rgba(255, 255, 255, 0.18);
+    color: #ffffff;
+}
+
+h2 {
+    text-align: center;
+    margin-bottom: 30px;
+    color: hsl(253, 97%, 49%);
+    font-size: 28px;
+    text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+}
+
+.input-group {
+    margin-bottom: 25px;
+    position: relative;
+}
+
+.input-group label {
+    display: block;
+    margin-bottom: 10px;
+    font-weight: 600;
+    color: #fff;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+.input-group input {
+    width: 100%;
+    padding: 14px 45px 14px 20px;
+    background-color: rgba(255, 255, 255, 0.1);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    font-size: 16px;
+    transition: all 0.3s;
+    color: #fff;
+}
+
+.input-group input::placeholder {
+    color: rgba(255, 255, 255, 0.7);
+}
+
+.input-group input:focus {
+    background-color: rgba(255, 255, 255, 0.2);
+    border-color: rgba(255, 255, 255, 0.5);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(255, 255, 255, 0.2);
+}
+
+.password-container {
+    position: relative;
+}
+
+.toggle-password {
+    position: absolute;
+    right: 15px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    color: rgba(255, 255, 255, 0.7);
+    font-size: 22px;
+    transition: all 0.3s;
+    background: none;
+    border: none;
+    padding: 5px;
+}
+
+.toggle-password:hover {
+    color: #fff;
+    transform: translateY(-50%) scale(1.1);
+}
+
+button {
+    width: 100%;
+    padding: 15px;
+    background-color: rgba(255, 255, 255, 0.2);
+    color: rgb(255, 255, 255);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    border-radius: 8px;
+    font-size: 16px;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.3s;
+    margin-top: 10px;
+    letter-spacing: 1px;
+}
+
+button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+    transform: translateY(-2px);
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.form-footer {
+    text-align: center;
+    margin-top: 25px;
+    color: rgba(255, 255, 255, 0.8);
+    font-size: 15px;
+}
+
+.form-footer a {
+    color: hsl(184, 79%, 39%);
+    text-decoration: none;
+    font-weight: 600;
+    transition: all 0.3s;
+    border-bottom: 1px solid transparent;
+}
+
+.form-footer a:hover {
+    border-bottom: 1px solid #ffffff;
+    text-shadow: 0 0 8px rgba(255, 255, 255, 0.5);
+}
+
+.error-message {
+    color: #f50707;
+    font-size: 14px;
+    margin-top: 8px;
+    display: none;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.3);
+}
+
+/* Effet de transition pour les inputs */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.input-group {
+    animation: fadeIn 0.5s ease-out forwards;
+}
+
+.input-group:nth-child(1) { animation-delay: 0.1s; }
+.input-group:nth-child(2) { animation-delay: 0.2s; }
+.input-group:nth-child(3) { animation-delay: 0.3s; }
+.input-group:nth-child(4) { animation-delay: 0.4s; }
+/* Ajoutez ces styles à votre fichier CSS */
+.shake {
+    animation: shake 0.5s linear;
+}
+
+@keyframes shake {
+    0%, 100% { transform: translateX(0); }
+    20%, 60% { transform: translateX(-5px); }
+    40%, 80% { transform: translateX(5px); }
+}
+
+.error-message {
+    display: none;
+    color: #ff6b6b;
+    font-size: 0.85rem;
+    margin-top: 5px;
+    text-shadow: none;
+}
+
+button[disabled] {
+    opacity: 0.7;
+    cursor: not-allowed;
+}

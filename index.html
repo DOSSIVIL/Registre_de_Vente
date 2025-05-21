@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Connexion</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h2>Connexion</h2>
+            <form id="loginForm">
+                <div class="input-group">
+                    <label for="loginUsername">Nom d'utilisateur</label>
+                    <input type="text" id="loginUsername" required>
+                    <div class="error-message"></div>
+                </div>
+                <div class="input-group">
+                    <label for="loginPassword">Mot de passe</label>
+                    <div class="password-container">
+                        <input type="password" id="loginPassword" required>
+                        <i class='bx bx-hide toggle-password' id="togglePassword"></i>
+                        <div class="error-message"></div>
+                    </div>
+                </div>
+                <button type="submit">Se connecter</button>
+                <p class="form-footer">Pas encore de compte? <a href="register.html">S'inscrire</a></p>
+            </form>
+        </div>
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>

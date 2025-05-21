@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tableau de Bord - Gestion des Ventes</title>
+    <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+    <link href='https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap' rel='stylesheet'>
+    <link rel="stylesheet" href="home.css">
+</head>
+<body>
+    <div class="dashboard-container">
+        <aside class="sidebar">
+           <div class="user-info">
+                <div class="avatar-container">
+                    <div class="avatar" id="user-avatar"></div>
+                    <label for="avatar-upload" class="avatar-edit">
+                        <i class='bx bx-pencil'></i>
+                        <input type="file" id="avatar-upload" accept="image/*" style="display:none;">
+                    </label>
+                </div>
+                <h3 id="username-display"></h3>
+                <p id="user-email"></p>
+            </div>
+            <nav>
+                <ul>
+                    <li class="active"><a href="#sales"><i class='bx bx-shopping-bag'></i> Ventes</a></li>
+                    <li><a href="#add-sale"><i class='bx bx-plus-circle'></i> Nouvelle Vente</a></li>
+                    <li><a href="#customers"><i class='bx bx-group'></i> Clients</a></li>
+                    <li><a href="#reports"><i class='bx bx-bar-chart-alt'></i> Rapports</a></li>
+                    <li id="admin-link" style="display:none;"><a href="#admin"><i class='bx bx-shield'></i> Admin</a></li>
+                </ul>
+            </nav>
+            <button id="logout-btn"><i class='bx bx-log-out'></i> Déconnexion</button>
+        </aside>
+
+        <main class="main-content">
+            <header>
+                <h1 id="page-title">Gestion des Ventes</h1>
+                <div class="search-bar">
+                    <input type="text" placeholder="Rechercher...">
+                    <i class='bx bx-search'></i>
+                </div>
+            </header>
+
+            <section id="sales-section" class="content-section">
+                <div class="section-header">
+                    <h2>Historique des Ventes</h2>
+                    <div class="section-actions">
+                        <button id="refresh-sales"><i class='bx bx-refresh'></i> Actualiser</button>
+                        <div class="date-filter">
+                            <input type="date" id="start-date">
+                            <span>à</span>
+                            <input type="date" id="end-date">
+                            <button id="apply-filter"><i class='bx bx-filter'></i> Filtrer</button>
+                        </div>
+                    </div>
+                </div>
+                <div class="sales-table-container">
+                    <table id="sales-table">
+                        <thead>
+                            <tr>
+                                <th>ID</th>
+                                <th>Produit</th>
+                                <th>Quantité</th>
+                                <th>Prix Unitaire</th>
+                                <th>Total</th>
+                                <th>Date</th>
+                                <th>Client</th>
+                                <th>Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <!-- Les ventes seront ajoutées dynamiquement ici -->
+                        </tbody>
+                    </table>
+                </div>
+            </section>
+
+            <section id="add-sale-section" class="content-section" style="display:none;">
+                <div class="section-header">
+                    <h2>Nouvelle Vente</h2>
+                </div>
+                <form id="sale-form">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="product-name">Produit</label>
+                            <input type="text" id="product-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="product-quantity">Quantité</label>
+                            <input type="number" id="product-quantity" min="1" value="1" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="unit-price">Prix Unitaire (€)</label>
+                            <input type="number" id="unit-price" step="0.01" min="0" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="total-price">Total (€)</label>
+                            <input type="number" id="total-price" readonly>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="client-name">Client</label>
+                            <input type="text" id="client-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="sale-date">Date</label>
+                            <input type="datetime-local" id="sale-date" required>
+                        </div>
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="save-draft" class="secondary-btn">
+                            <i class='bx bx-save'></i> Sauvegarder brouillon
+                        </button>
+                        <button type="submit" id="submit-sale" class="primary-btn">
+                            <i class='bx bx-check'></i> Enregistrer la vente
+                        </button>
+                    </div>
+                </form>
+            </section>
+             <!-- Section Formulaire Client -->
+            <section id="add-customer-section" class="content-section" style="display:none;">
+                <div class="section-header">
+                    <h2 id="customer-form-title">Nouveau Client</h2>
+                </div>
+                <form id="customer-form">
+                    <input type="hidden" id="customer-id">
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customer-lastname">Nom</label>
+                            <input type="text" id="customer-lastname" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-firstname">Prénom</label>
+                            <input type="text" id="customer-firstname" required>
+                        </div>
+                    </div>
+                    <div class="form-row">
+                        <div class="form-group">
+                            <label for="customer-email">Email</label>
+                            <input type="email" id="customer-email" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="customer-phone">Téléphone</label>
+                            <input type="tel" id="customer-phone">
+                        </div>
+                    </div>
+                    <div class="form-group">
+                        <label for="customer-company">Entreprise</label>
+                        <input type="text" id="customer-company">
+                    </div>
+                    <div class="form-actions">
+                        <button type="button" id="cancel-customer" class="secondary-btn">
+                            <i class='bx bx-x'></i> Annuler
+                        </button>
+                        <button type="submit" id="save-customer" class="primary-btn">
+                            <i class='bx bx-check'></i> Enregistrer
+                        </button>
+                    </div>
+                </form>
+            </section>
+
+            <!-- Section Rapports -->
+            <section id="reports-section" class="content-section" style="display:none;">
+                <div class="section-header">
+                    <h2>Rapports et Statistiques</h2>
+                    <div class="section-actions">
+                        <div class="report-period">
+                            <select id="report-period">
+                                <option value="day">Aujourd'hui</option>
+                                <option value="week">Cette semaine</option>
+                                <option value="month" selected>Ce mois</option>
+                                <option value="quarter">Ce trimestre</option>
+                                <option value="year">Cette année</option>
+                                <option value="custom">Période personnalisée</option>
+                            </select>
+                            <div id="custom-period" style="display:none;">
+                                <input type="date" id="report-start-date">
+                                <span>à</span>
+                                <input type="date" id="report-end-date">
+                            </div>
+                        </div>
+                        <button id="generate-report" class="primary-btn">
+                            <i class='bx bx-refresh'></i> Générer
+                        </button>
+                        <button id="export-report" class="secondary-btn">
+                            <i class='bx bx-download'></i> Exporter
+                        </button>
+                    </div>
+                </div>
+                
+                <div class="report-summary">
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <i class='bx bx-trending-up'></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3>Chiffre d'affaires</h3>
+                            <p id="revenue-amount">€0.00</p>
+                            <span id="revenue-change" class="positive">+0%</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <i class='bx bx-cart'></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3>Ventes</h3>
+                            <p id="sales-count">0</p>
+                            <span id="sales-change" class="positive">+0%</span>
+                        </div>
+                    </div>
+                    <div class="summary-card">
+                        <div class="summary-icon">
+                            <i class='bx bx-user'></i>
+                        </div>
+                        <div class="summary-content">
+                            <h3>Nouveaux clients</h3>
+                            <p id="customers-count">0</p>
+                            <span id="customers-change" class="positive">+0%</span>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="report-charts">
+                    <div class="chart-container">
+                        <h3>Ventes par période</h3>
+                        <canvas id="sales-chart"></canvas>
+                    </div>
+                    <div class="chart-container">
+                        <h3>Top produits</h3>
+                        <canvas id="products-chart"></canvas>
+                    </div>
+                </div>
+            </section>
+
+            <!-- Modal pour modifier une vente -->
+            <div id="edit-modal" class="modal">
+                <div class="modal-content">
+                    <span class="close-modal">&times;</span>
+                    <h2>Modifier la Vente</h2>
+                    <form id="edit-sale-form">
+                        <input type="hidden" id="edit-sale-id">
+                        <div class="form-group">
+                            <label for="edit-product-name">Produit</label>
+                            <input type="text" id="edit-product-name" required>
+                        </div>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label for="edit-product-quantity">Quantité</label>
+                                <input type="number" id="edit-product-quantity" min="1" required>
+                            </div>
+                            <div class="form-group">
+                                <label for="edit-unit-price">Prix Unitaire (€)</label>
+                                <input type="number" id="edit-unit-price" step="0.01" min="0" required>
+                            </div>
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-client-name">Client</label>
+                            <input type="text" id="edit-client-name">
+                        </div>
+                        <div class="form-group">
+                            <label for="edit-sale-date">Date</label>
+                            <input type="datetime-local" id="edit-sale-date" required>
+                        </div>
+                        <div class="modal-actions">
+                            <button type="button" id="delete-sale" class="danger-btn">
+                                <i class='bx bx-trash'></i> Supprimer
+                            </button>
+                            <button type="submit" class="primary-btn">
+                                <i class='bx bx-save'></i> Enregistrer
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+            <!-- Modal pour confirmer le téléchargement -->
+            <div id="download-modal" class="modale" style="display: none;">
+                <div class="modale-content">
+                    <span class="close-download-modal">&times;</span>
+                    <h2>Télécharger la Facture</h2>
+                    <hr class="divider1"/>
+                    <p>ID Vente : <strong id="download-sale-id"></strong></p>
+                    <p>Produit : <strong id="download-product-name"></strong></p>
+                    <p>Client : <strong id="download-client-name"></strong></p>
+                    <button id="confirm-download-btn">Télécharger PDF</button>
+                </div>
+            </div>
+
+
+
+        </main>
+    </div>
+
+    <script src="home.js"></script>
+    <script src="t.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf-autotable/3.5.25/jspdf.plugin.autotable.min.js"></script>
+
+
+
+</body>
+</html>
